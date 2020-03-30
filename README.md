@@ -1,5 +1,8 @@
 # PyLidar3
 
+#Fixed Code to account for inaccurate data in the original version.
+
+
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://github.com/lakshmanmallidi/PyLidar3) [![license](https://img.shields.io/github/license/DAVFoundation/captain-n3m0.svg?style=flat-square)](https://github.com/lakshmanmallidi/PyLidar3/License)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Flakshmanmallidi%2FPyLidar3.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Flakshmanmallidi%2FPyLidar3?ref=badge_shield)
 <br />PyLidar3 is python 3 package to get data from Lidar device. Currently supports ydlidar from [www.ydlidar.com/]([www.ydlidar.com/).
@@ -23,7 +26,7 @@ pip install PyLidar3
 You can also install using setup.py file from git repository.
 
 ## Usage
-This package consists of multiple classes representing the version of lidar you are using. The class structure is YdLidarX4 where X4 is version name ydlidar. Further contribution are actively accepted. 
+This package consists of multiple classes representing the version of lidar you are using. The class structure is YdLidarX4 where X4 is version name ydlidar. Further contribution are actively accepted.
 ##### Class structure:
 ###### YdLidarX4
 `Arguments`: port, chunk_size(default:6000).<br/>
@@ -32,8 +35,8 @@ This package consists of multiple classes representing the version of lidar you 
 
 `chunk_size`: Number of bytes of data read from device. Increase in chunk_size results in more averaged angle:distance pairs but increase response time result in slower data acquisition. For faster data acquisition decrease chunk_size.<br/>
 ```
-Note: Calibrate chunk size depends on your application and frequency of device. 
-if the chunk size is not enough not all angles are covered. 
+Note: Calibrate chunk size depends on your application and frequency of device.
+if the chunk size is not enough not all angles are covered.
 ```
 
 * `Connect` -- Begin serial connection with Lidar by opening serial port. Return success status True/False.<br />
@@ -58,8 +61,8 @@ if the chunk size is not enough not all angles are covered.
 
 `chunk_size`: Number of bytes of data read from device. Increase in chunk_size results in more averaged angle:distance pairs but increase response time result in slower data acquisition. For faster data acquisition decrease chunk_size.<br/>
 ```
-Note: Calibrate chunk size depends on your application and frequency of device. 
-if the chunk size is not enough not all angles are covered. 
+Note: Calibrate chunk size depends on your application and frequency of device.
+if the chunk size is not enough not all angles are covered.
 ```
 
 * `Connect` -- Begin serial connection with Lidar by opening serial port. Return success status True/False.<br />
@@ -122,14 +125,14 @@ This Example prints data from lidar
 import PyLidar3
 import time # Time module
 #Serial port to which lidar connected, Get it from device manager windows
-#In linux type in terminal -- ls /dev/tty* 
+#In linux type in terminal -- ls /dev/tty*
 port = input("Enter port name which lidar is connected:") #windows
 #port = "/dev/ttyUSB0" #linux
-Obj = PyLidar3.YdLidarX4(port) #PyLidar3.your_version_of_lidar(port,chunk_size) 
+Obj = PyLidar3.YdLidarX4(port) #PyLidar3.your_version_of_lidar(port,chunk_size)
 if(Obj.Connect()):
     print(Obj.GetDeviceInfo())
     gen = Obj.StartScanning()
-    t = time.time() # start time 
+    t = time.time() # start time
     while (time.time() - t) < 30: #scan for 30 seconds
         print(next(gen))
         time.sleep(0.5)
@@ -156,8 +159,8 @@ def draw():
         plt.scatter(x,y,c='r',s=8)
         plt.pause(0.001)
     plt.close("all")
-    
-                
+
+
 is_plot = True
 x=[]
 y=[]
@@ -166,12 +169,12 @@ for _ in range(360):
     y.append(0)
 
 port =  input("Enter port name which lidar is connected:") #windows
-Obj = PyLidar3.YdLidarX4(port) #PyLidar3.your_version_of_lidar(port,chunk_size) 
+Obj = PyLidar3.YdLidarX4(port) #PyLidar3.your_version_of_lidar(port,chunk_size)
 threading.Thread(target=draw).start()
 if(Obj.Connect()):
     print(Obj.GetDeviceInfo())
     gen = Obj.StartScanning()
-    t = time.time() # start time 
+    t = time.time() # start time
     while (time.time() - t) < 30: #scan for 30 seconds
         data = next(gen)
         for angle in range(0,360):
@@ -187,7 +190,7 @@ else:
 ```
 ## Testing
 
-A "tesing" branch is maintained in the git repository for testing, debugging and updating the code. Please visit Github repo [https://github.com/lakshmanmallidi/PyLidar3](https://github.com/lakshmanmallidi/PyLidar3) for further information. 
+A "tesing" branch is maintained in the git repository for testing, debugging and updating the code. Please visit Github repo [https://github.com/lakshmanmallidi/PyLidar3](https://github.com/lakshmanmallidi/PyLidar3) for further information.
 
 
 ## License
